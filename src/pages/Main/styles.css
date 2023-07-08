@@ -2,6 +2,22 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    align-items: center;
 
     min-height: 100vh;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+
+    min-height: calc(100vh - 70px);
+    width: 100%;
+    max-width: 1300px;
+    padding: 40px 200px;
+}
+
+main button {
+    width: 200px;
+    margin-bottom: 24px;
 }

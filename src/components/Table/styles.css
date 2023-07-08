@@ -1,0 +1,19 @@
+.container-table {
+    width: 100%;
+}
+
+.table-header {
+    display: flex;
+    align-items: center;
+
+    height: 46px;
+    padding: 0 24px;
+
+    text-align: left;
+
+    background-color: #F4F0F0;
+}
+
+.table-header strong {
+    width: 25%;
+}
