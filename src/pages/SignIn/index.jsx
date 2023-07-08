@@ -22,7 +22,7 @@ function SignIn() {
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
-            placeholder='password'
+            placeholder='Senha'
             type='password'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
