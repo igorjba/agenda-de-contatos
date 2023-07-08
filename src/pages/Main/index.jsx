@@ -7,14 +7,12 @@ function Main() {
     <div container-main>
       <Header />
       <main>
-
         <button
           className='btn-green'>
           Adicionar
         </button>
 
         <Table />
-
       </main>
     </div>
   )
