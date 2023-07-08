@@ -2,7 +2,7 @@
     display: flex;
 
     width: 100vw;
-    min-height: 100vh;
+    height: 100vh;
 }
 
 .container-sign-in img {
@@ -10,5 +10,40 @@
 }
 
 .right-sign-in {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
     width: 50%;
+}
+
+.right-sign-in span:first-child {
+    margin-bottom: 8px;
+    width: 400px;
+    text-align: left;
+}
+
+.right-sign-in h1 {
+    margin-bottom: 32px;
+    width: 400px;
+    text-align: left;
+}
+
+.right-sign-in form {
+    width: 400px;
+}
+
+.right-sign-in span a {
+    text-decoration: none;
+    margin-left: 4px;
+}
+
+.right-sign-in form input {
+    margin-bottom: 16px;
+}
+
+.right-sign-in form button {
+    margin-top: 72px;
+    margin-bottom: 96px;
 }
