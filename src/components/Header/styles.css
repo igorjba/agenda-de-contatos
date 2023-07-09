@@ -13,10 +13,12 @@ header {
 
 .logo {
     height: 18px;
+
     cursor: pointer;
 }
 
 .sign-out {
     height: 18px;
+
     cursor: pointer;
 }

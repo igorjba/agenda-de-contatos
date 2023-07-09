@@ -1,18 +1,51 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import BackgroundSignUp from '../../assets/background-sign-up.png';
+import api from '../../services/api';
 import './styles.css';
 
 function SignUp() {
+  const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [name, setName] = useState('')
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    try {
+      if (!email || !password || !name) {
+        alert('Preencha todos os campos')
+        return
+      }
+
+      const response = await api.post('/usuarios', {
+        nome: name,
+        email,
+        senha: password
+      })
+
+      if (response.data.erro) {
+        alert(response.data.erro)
+        return
+      }
+
+      alert('Usuário cadastrado com sucesso!')
+      navigate('/')
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+
+
 
   return (
     <div className='container-sign-up'>
       <div className='left-sign-up'>
         <h3>Cadastre-se</h3>
-        <form >
+        <form onSubmit={handleSubmit}>
           <input
             placeholder='Nome'
             type='text'
