@@ -1,8 +1,26 @@
-import './styles.css'
-import DeletIcon from '../../assets/delete-icon.svg'
+import { useState } from 'react'
+import DeleteIcon from '../../assets/delete-icon.svg'
 import EditIcon from '../../assets/edit-icon.svg'
+import ConfirmModal from '../ConfirmModal'
+import './styles.css'
 
 function Table() {
+    const [open, setOpen] = useState(false)
+
+    const handleClose = () => {
+        setOpen(false);
+    }
+
+    const handleConfirm = () => {
+        setOpen(false);
+    }
+
+    const handleDeleteContact = (contact) => {
+        setOpen(true);
+    }
+
+
+
     return (
         <div className='container-table'>
             <div className='table-header'>
@@ -18,14 +36,29 @@ function Table() {
                     <span>daniel.lopes@cubos.academy</span>
                     <span>(11) 99999-9999</span>
                     <div className='container-action-buttons'>
-                        <img src={EditIcon} alt="Edit" />
-                        <img src={DeletIcon} alt="Delete" />
+                        <img
+                            src={EditIcon}
+                            alt="Edit"
+                        />
+                        <img
+                            src={DeleteIcon}
+                            alt="Delete"
+                            onClick={() => handleDeleteContact(1)}
+                        />
                     </div>
 
                 </div>
 
             </div>
-
+            <ConfirmModal
+                title="Confirmação de exclusão?"
+                subTitle="Deseja excluir o contato João?"
+                textBtnConfirm="Excluir"
+                textBtnCancel="Cancelar"
+                open={open}
+                handleClose={handleClose}
+                handleConfirm={handleConfirm}
+            />
 
         </div>
     )

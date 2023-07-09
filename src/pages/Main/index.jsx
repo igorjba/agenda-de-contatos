@@ -1,10 +1,10 @@
 import Header from '../../components/Header';
-import './styles.css';
 import Table from '../../components/Table';
+import './styles.css';
 
 function Main() {
   return (
-    <div container-main>
+    <div className='container-main'>
       <Header />
       <main>
         <button

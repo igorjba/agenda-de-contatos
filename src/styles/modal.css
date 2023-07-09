@@ -1,0 +1,28 @@
+.backdrop {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: fixed;
+    left: 0;
+    top: 0;
+
+    width: 100vw;
+    min-height: 100vh;
+
+    background-color: rgba(16, 15, 15, 0.56);
+}
+
+.modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 50vw;
+    height: 50vh;
+    padding: 56px;
+
+    background-color: white;
+    border-radius: 10px;
+}
