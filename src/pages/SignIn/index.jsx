@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import BackgroundSignIn from '../../assets/background-sign-in.png';
 import useGlobalContext from '../../hooks/useGlobalContext';
@@ -37,6 +37,13 @@ function SignIn() {
       alert(error.response.data)
     }
   }
+
+  useEffect(() => {
+    if (token) {
+      navigate('/main')
+    }
+  }, [])
+
 
   return (
     <div className='container-sign-in'>

@@ -2,12 +2,16 @@ import { useNavigate } from 'react-router-dom';
 import Logo from '../../assets/logo.svg';
 import SignOutIcon from '../../assets/sign-out-icon.svg';
 import './styles.css';
+import useGlobalContext from '../../hooks/useGlobalContext';
 
 function Header() {
     const navigate = useNavigate();
+    const { clearToken, clearUser } = useGlobalContext();
+
     const handleLogout = () => {
-        localStorage.removeItem('token');
         navigate('/');
+        clearToken();
+        clearUser();
     }
 
     return (
