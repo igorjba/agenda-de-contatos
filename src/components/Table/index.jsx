@@ -2,24 +2,34 @@ import { useState } from 'react'
 import DeleteIcon from '../../assets/delete-icon.svg'
 import EditIcon from '../../assets/edit-icon.svg'
 import ConfirmModal from '../ConfirmModal'
+import EditContactsModal from '../EditContactsModal'
 import './styles.css'
 
 function Table() {
-    const [open, setOpen] = useState(false)
+    const [openDelete, setOpenDelete] = useState(false)
+    const [openEdit, setOpenEdit] = useState('');
 
-    const handleClose = () => {
-        setOpen(false);
+    const handleCloseDelete = () => {
+        setOpenDelete(false);
     }
 
-    const handleConfirm = () => {
-        setOpen(false);
+    const handleConfirmDelete = () => {
+        setOpenDelete(false);
     }
 
-    const handleDeleteContact = (contact) => {
-        setOpen(true);
+    // const handleDeleteContact = (contact) => {
+    //     setOpenDelete(!openDelete);
+    // }
+    // const handleEditContact = (contact) => {
+    //     setOpenEdit(!openEdit);
+    // }
+
+    const toggleDeleteModal = () => {
+        setOpenDelete(!openDelete);
     }
-
-
+    const toggleEditModal = () => {
+        setOpenEdit(!openEdit);
+    }
 
     return (
         <div className='container-table'>
@@ -39,11 +49,12 @@ function Table() {
                         <img
                             src={EditIcon}
                             alt="Edit"
+                            onClick={toggleEditModal}
                         />
                         <img
                             src={DeleteIcon}
                             alt="Delete"
-                            onClick={() => handleDeleteContact(1)}
+                            onClick={toggleDeleteModal}
                         />
                     </div>
 
@@ -55,9 +66,13 @@ function Table() {
                 subTitle="Deseja excluir o contato João?"
                 textBtnConfirm="Excluir"
                 textBtnCancel="Cancelar"
-                open={open}
-                handleClose={handleClose}
-                handleConfirm={handleConfirm}
+                openDelete={openDelete}
+                handleCloseDelete={handleCloseDelete}
+                handleConfirmDelete={handleConfirmDelete}
+            />
+            <EditContactsModal
+                openEdit={openEdit}
+                toggleEditModal={toggleEditModal}
             />
 
         </div>
