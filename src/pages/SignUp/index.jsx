@@ -15,7 +15,6 @@ function SignUp() {
 
     try {
       if (!email || !password || !name) {
-        alert('Preencha todos os campos')
         return
       }
 
@@ -30,7 +29,6 @@ function SignUp() {
         return
       }
 
-      alert('Usuário cadastrado com sucesso!')
       navigate('/')
 
     } catch (error) {
