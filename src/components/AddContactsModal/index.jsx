@@ -1,11 +1,16 @@
 import { useState } from 'react';
 import CloseIcon from '../../assets/close-icon.svg';
+import useGlobalContext from '../../hooks/useGlobalContext';
+import api from '../../services/api';
 import './styles.css';
+
 
 function AddContactsModal({
     open,
     handleClose
 }) {
+    const { token, setContacts, contacts } = useGlobalContext();
+
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
@@ -15,6 +20,42 @@ function AddContactsModal({
         setEmail('');
         setPhone('');
     }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (!name || !email || !phone) {
+            return alert('Preencha todos os campos')
+        }
+
+        try {
+            const response = await api.post('/contatos', {
+                nome: name,
+                telefone: phone,
+                email: email
+
+            }
+                , {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            )
+
+            if (response.status > 204) {
+                return alert('Erro ao cadastrar contato')
+            }
+            setContacts([...contacts, ...response.data])
+            console.log(response.data)
+            handleClear();
+            handleClose();
+        } catch (error) {
+            console.log(error.response)
+            alert(error.response.data)
+        }
+    }
+
+
 
     return (
         open &&
@@ -27,7 +68,7 @@ function AddContactsModal({
                     onClick={handleClose}
                 />
                 <h2>Novo contato</h2>
-                <form className='form-add'>
+                <form className='form-add' onSubmit={handleSubmit}>
                     <input
                         type="text"
                         placeholder='Nome'
@@ -46,20 +87,20 @@ function AddContactsModal({
                         onChange={(e) => setPhone(e.target.value)}
                         value={phone}
                     />
+                    <div className='container-buttons'>
+                        <button
+                            className='btn-green btn-confirm'
+                        >
+                            Adicionar
+                        </button>
+                        <button
+                            className='btn-red btn-cancel'
+                            onClick={handleClear}
+                        >
+                            Limpar
+                        </button>
+                    </div>
                 </form>
-                <div className='container-buttons'>
-                    <button
-                        className='btn-green btn-confirm'
-                    >
-                        Adicionar
-                    </button>
-                    <button
-                        className='btn-red btn-cancel'
-                        onClick={handleClear}
-                    >
-                        Limpar
-                    </button>
-                </div>
             </div>
         </div>
 

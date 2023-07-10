@@ -17,6 +17,10 @@ function Table() {
         setOpenDelete(false);
     }
 
+    const handleDeleteContact = (contact) => {
+        setOpenDelete(true);
+    }
+
     // const handleDeleteContact = (contact) => {
     //     setOpenDelete(!openDelete);
     // }
@@ -54,7 +58,7 @@ function Table() {
                         <img
                             src={DeleteIcon}
                             alt="Delete"
-                            onClick={toggleDeleteModal}
+                            onClick={() => handleDeleteContact(1)}
                         />
                     </div>
 
