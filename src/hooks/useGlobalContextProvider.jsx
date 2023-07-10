@@ -4,6 +4,7 @@ const useGlobalContextProvider = () => {
     const [token, setToken, clearToken] = useLocalStorage('token');
     const [user, setUser, clearUser] = useLocalStorage('user');
     const [contacts, setContacts] = useLocalStorage('contacts', []);
+    const [currentContact, setCurrentContact, clearCurrentContact] = useLocalStorage('current_contact');
 
     return {
         token,
@@ -13,7 +14,11 @@ const useGlobalContextProvider = () => {
         setUser,
         clearUser,
         contacts,
-        setContacts
+        setContacts,
+        currentContact,
+        setCurrentContact,
+        clearCurrentContact
+
     };
 }
 

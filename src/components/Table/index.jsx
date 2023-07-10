@@ -8,7 +8,7 @@ import EditContactsModal from '../EditContactsModal'
 import './styles.css'
 
 function Table() {
-    const { token, contacts, setContacts } = useGlobalContext();
+    const { token, contacts, setContacts, setCurrentContact } = useGlobalContext();
 
     const [openDelete, setOpenDelete] = useState(false)
     const [openEdit, setOpenEdit] = useState('');
@@ -21,20 +21,19 @@ function Table() {
         setOpenDelete(false);
     }
 
+    const handleCloseEdit = () => {
+        setOpenEdit(false);
+    }
+
     const handleDeleteContact = (contact) => {
+        setCurrentContact(contact);
         setOpenDelete(true);
     }
 
     const handleEditContact = (contact) => {
+        setCurrentContact(contact);
         setOpenEdit(true);
     }
-
-    // const toggleDeleteModal = () => {
-    //     setOpenDelete(!openDelete);
-    // }
-    // const toggleEditModal = () => {
-    //     setOpenEdit(!openEdit);
-    // }
 
     useEffect(() => {
         const loadContacts = async () => {
@@ -44,11 +43,11 @@ function Table() {
                         Authorization: `Bearer ${token}`
                     }
                 })
+
                 if (response.status > 204) {
                     return alert('Erro ao cadastrar contato')
                 }
-                console.log(response.data)
-                console.log(contacts)
+
                 setContacts([...response.data])
 
             } catch (error) {
@@ -56,11 +55,8 @@ function Table() {
             }
         }
 
-
         loadContacts();
     }, []);
-
-
 
     return (
         <div className='container-table'>
@@ -106,6 +102,7 @@ function Table() {
             <EditContactsModal
                 openEdit={openEdit}
                 handleEditContact={handleEditContact}
+                handleCloseEdit={handleCloseEdit}
             />
 
         </div>
