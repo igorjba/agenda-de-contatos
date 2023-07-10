@@ -1,5 +1,6 @@
 import './styles.css';
 import CloseIcon from '../../assets/close-icon.svg';
+import useGlobalContext from '../../hooks/useGlobalContext';
 
 function ConfirmModal({
     title,
@@ -10,6 +11,8 @@ function ConfirmModal({
     handleCloseDelete,
     handleConfirmDelete
 }) {
+
+    const { currentContact } = useGlobalContext();
 
     return (
         openDelete &&
@@ -22,7 +25,7 @@ function ConfirmModal({
                     onClick={handleCloseDelete}
                 />
                 <h1>{title}</h1>
-                <span>{subTitle}</span>
+                <span>{subTitle + currentContact.nome}?</span>
                 <div className='container-buttons'>
                     <button
                         className='btn-green btn-confirm'

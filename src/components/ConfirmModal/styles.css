@@ -3,6 +3,10 @@
     height: 319px;
 }
 
+.modal-confirm span {
+    margin-top: 24px;
+}
+
 .container-buttons button {
     width: 100%;
 }

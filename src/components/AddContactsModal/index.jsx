@@ -46,12 +46,11 @@ function AddContactsModal({
                 return alert('Erro ao cadastrar contato')
             }
             setContacts([...contacts, ...response.data])
-            console.log(response.data)
             handleClear();
             handleClose();
         } catch (error) {
             console.log(error.response)
-            alert(error.response.data)
+            alert('Erro ao cadastrar contato')
         }
     }
 

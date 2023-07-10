@@ -8,7 +8,7 @@ import EditContactsModal from '../EditContactsModal'
 import './styles.css'
 
 function Table() {
-    const { token, contacts, setContacts, setCurrentContact } = useGlobalContext();
+    const { token, contacts, setContacts, setCurrentContact, currentContact } = useGlobalContext();
 
     const [openDelete, setOpenDelete] = useState(false)
     const [openEdit, setOpenEdit] = useState('');
@@ -17,9 +17,33 @@ function Table() {
         setOpenDelete(false);
     }
 
-    const handleConfirmDelete = () => {
-        setOpenDelete(false);
+    const handleConfirmDelete = async () => {
+        try {
+            const response = await api.delete(`/contatos/${currentContact.id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+
+            if (response.status > 204) {
+                return alert('Erro ao deletar contato')
+            }
+
+            const localContacts = [...contacts]
+
+            const contactInEditingIndex = localContacts.findIndex((contact) => contact.id === currentContact.id)
+
+            localContacts.splice(contactInEditingIndex, 1)
+
+            setContacts([...localContacts]);
+
+            handleCloseDelete();
+        } catch (error) {
+            console.log(error);
+        }
     }
+
+
 
     const handleCloseEdit = () => {
         setOpenEdit(false);
@@ -92,7 +116,7 @@ function Table() {
             </div>
             <ConfirmModal
                 title="Confirmação de exclusão?"
-                subTitle="Deseja excluir o contato João?"
+                subTitle="Deseja excluir o contato, "
                 textBtnConfirm="Excluir"
                 textBtnCancel="Cancelar"
                 openDelete={openDelete}
