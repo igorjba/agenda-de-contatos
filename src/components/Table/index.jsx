@@ -1,11 +1,15 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import DeleteIcon from '../../assets/delete-icon.svg'
 import EditIcon from '../../assets/edit-icon.svg'
+import useGlobalContext from '../../hooks/useGlobalContext'
+import api from '../../services/api'
 import ConfirmModal from '../ConfirmModal'
 import EditContactsModal from '../EditContactsModal'
 import './styles.css'
 
 function Table() {
+    const { token, contacts, setContacts } = useGlobalContext();
+
     const [openDelete, setOpenDelete] = useState(false)
     const [openEdit, setOpenEdit] = useState('');
 
@@ -21,19 +25,42 @@ function Table() {
         setOpenDelete(true);
     }
 
-    // const handleDeleteContact = (contact) => {
+    const handleEditContact = (contact) => {
+        setOpenEdit(true);
+    }
+
+    // const toggleDeleteModal = () => {
     //     setOpenDelete(!openDelete);
     // }
-    // const handleEditContact = (contact) => {
+    // const toggleEditModal = () => {
     //     setOpenEdit(!openEdit);
     // }
 
-    const toggleDeleteModal = () => {
-        setOpenDelete(!openDelete);
-    }
-    const toggleEditModal = () => {
-        setOpenEdit(!openEdit);
-    }
+    useEffect(() => {
+        const loadContacts = async () => {
+            try {
+                const response = await api.get('/contatos', {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+                if (response.status > 204) {
+                    return alert('Erro ao cadastrar contato')
+                }
+                console.log(response.data)
+                console.log(contacts)
+                setContacts([...response.data])
+
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+
+        loadContacts();
+    }, []);
+
+
 
     return (
         <div className='container-table'>
@@ -45,24 +72,26 @@ function Table() {
             </div>
 
             <div className='table-body'>
-                <div className='table-row'>
-                    <span>João</span>
-                    <span>daniel.lopes@cubos.academy</span>
-                    <span>(11) 99999-9999</span>
-                    <div className='container-action-buttons'>
-                        <img
-                            src={EditIcon}
-                            alt="Edit"
-                            onClick={toggleEditModal}
-                        />
-                        <img
-                            src={DeleteIcon}
-                            alt="Delete"
-                            onClick={() => handleDeleteContact(1)}
-                        />
-                    </div>
+                {contacts.map((contact) => {
+                    return <div className='table-row' key={contact.id} >
+                        <span>{contact.nome}</span>
+                        <span>{contact.email}</span>
+                        <span>{contact.telefone}</span>
+                        <div className='container-action-buttons'>
+                            <img
+                                src={EditIcon}
+                                alt="Edit"
+                                onClick={() => handleEditContact(contact)}
+                            />
+                            <img
+                                src={DeleteIcon}
+                                alt="Delete"
+                                onClick={() => handleDeleteContact(contact)}
+                            />
+                        </div>
 
-                </div>
+                    </div>
+                })}
 
             </div>
             <ConfirmModal
@@ -76,7 +105,7 @@ function Table() {
             />
             <EditContactsModal
                 openEdit={openEdit}
-                toggleEditModal={toggleEditModal}
+                handleEditContact={handleEditContact}
             />
 
         </div>

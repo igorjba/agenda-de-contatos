@@ -4,7 +4,7 @@ import './styles.css';
 
 function EditContactsModal({
     openEdit,
-    toggleEditModal
+    handleEditContact
 }) {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -49,7 +49,7 @@ function EditContactsModal({
                     </button>
                     <button
                         className='btn-red btn-cancel'
-                        onClick={toggleEditModal}
+                        onClick={handleEditContact}
                     >
                         Cancelar
                     </button>
